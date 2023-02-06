@@ -1,7 +1,10 @@
 package com.aws.book.springboot.service;
 
+import com.aws.book.springboot.domain.posts.Posts;
 import com.aws.book.springboot.domain.posts.PostsRepository;
+import com.aws.book.springboot.web.dto.PostsResponseDto;
 import com.aws.book.springboot.web.dto.PostsSaveRequestDto;
+import com.aws.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,4 +24,32 @@ public class PostsService {
     public Long save(PostsSaveRequestDto requestDto) {
         return postsRepository.save(requestDto.toEntity()).getId();
     }
+
+    @Transactional
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        // JPA의 영속성 컨텍스트 때문이다, 영속성 컨텍스트는 -> 엔티티를 영구 저장하는 환경
+        // entityManager.persist(entity); -> DB에 저장하는 것이 아니라 영속성 컨텍스트에 저장한다는 의미
+
+        // id를 기반으로 하여 게시글 조회, 없을 경우 Exception 반환
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        // Posts 안에 public void update(String title, String content) 메서드가 존재
+        // Entity 안에 메서드를 넣어서 처리 하였음, DDD 구조인가?
+        // TODO: 체크 포인트
+        // DB에 쿼리를 날리는 부분이 존재하지 않는다?
+        // 단순히 posts 엔티티를 업데이트 하는 구문밖에 존재하지 않는다..
+        posts.update(requestDto.getTitle(), requestDto.getContent());
+
+        return id;
+    }
+
+    public PostsResponseDto findById(Long id) {
+        // id를 기반으로 하여 게시글 조회, 없을 경우 Exception 반환
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        // Response 객체인 PostsResponseDto의 생성자에 Posts:posts 변수를 인수로 준다
+        return new PostsResponseDto(posts);
+    }
+
 }
