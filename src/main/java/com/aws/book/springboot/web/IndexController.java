@@ -13,4 +13,9 @@ public class IndexController {
         log.info("Enter index page");
         return "index";
     }
+
+    @GetMapping("/posts/save")
+    public String postsSave() {
+        return "posts-save"; // 글 등록 화면으로 이동
+    }
 }
