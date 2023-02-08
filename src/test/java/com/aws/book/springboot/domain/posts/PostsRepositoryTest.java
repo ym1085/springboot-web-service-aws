@@ -1,6 +1,5 @@
 package com.aws.book.springboot.domain.posts;
 
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +25,26 @@ public class PostsRepositoryTest {
     @After
     public void cleanup() {
         postsRepository.deleteAll();
+    }
+
+    @Test
+    public void BaseTimeEntity_등록() throws Exception {
+        //given
+        LocalDateTime now = LocalDateTime.of(2019, 6, 4, 0, 0, 0);
+
+        // 샘플 게시글 등록
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        //when
+        List<Posts> all = postsRepository.findAll();
+
+        //then
+        assertThat(all.get(0).getCreatedDate()).isAfter(now);
+        assertThat(all.get(0).getModifiedDate()).isAfter(now);
     }
 
     @Test
@@ -46,8 +68,8 @@ public class PostsRepositoryTest {
 
         //then
         Posts result = postList.get(0);
-        Assertions.assertThat(result.getTitle()).isEqualTo(title);
-        Assertions.assertThat(result.getContent()).isEqualTo(content);
+        assertThat(result.getTitle()).isEqualTo(title);
+        assertThat(result.getContent()).isEqualTo(content);
     }
 
 }
