@@ -9,7 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
+// https://www.daleseo.com/lombok-popular-annotations/
+@RequiredArgsConstructor // final이나 @NonNull인 필드 값만 파라미터로 받는 생성자를 만들어줍니다.
 @Service
 public class PostsService {
 
