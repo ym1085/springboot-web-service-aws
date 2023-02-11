@@ -52,7 +52,6 @@ public class PostsService {
 
         // Posts 안에 public void update(String title, String content) 메서드가 존재
         // Entity 안에 메서드를 넣어서 처리 하였음, DDD 구조인가?
-        // TODO: 체크 포인트
         // DB에 쿼리를 날리는 부분이 존재하지 않는다?
         // 단순히 posts 엔티티를 업데이트 하는 구문밖에 존재하지 않는다..
         posts.update(requestDto.getTitle(), requestDto.getContent());
@@ -83,6 +82,14 @@ public class PostsService {
 //                .map(posts -> new PostsListResponseDto(posts))
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        postsRepository.delete(posts); // JpaRepository에서 이미 delete 메서드 지원 중
     }
 
 }

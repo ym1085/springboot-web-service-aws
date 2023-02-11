@@ -1,16 +1,42 @@
 # 스프링부트와 AWS로 혼자 구현하는 웹 서비스
 
-## 학습 목적
+해당 프로젝트는 개인적인 공부를 목적으로 하였기에 불필요한 주석이 소스내에  
+다수 존재할 수 있습니다.
 
-1. 스프링 부트를 기반으로 JPA, 시큐리티, OAuth 기술을 습득하기 위함
-2. 기본적인 테스트코드 작성법 숙지
-3. AWS Cloud Infra CI/CD 배포 환경 방식 숙지 
+## Tech Spec
 
-## 학습 링크
+- JDK 1.8
+- Spring boot 2.1.9.RELEASE 
+- H2
 
-- [스프링부트와 AWS로 혼자 구현하는 웹 서비스 - Notion](https://chipped-moat-7da.notion.site/AWS-dd2df40406fd45b4bcf5f09dd693dbe6)
+## Goal
 
-## 참고 자료
+1. Learning Spring boot JPA, Security, OAuth
+2. Learning writing Test Code with JUnit
+3. Learning AWS Cloud Infra and CI/CD
 
-- [이동욱 CTO 님의 오픈소스 깃헙](https://github.com/jojoldu/freelec-springboot2-webservice)
+## How to use?
+
+```docker
+# build Dockerfile
+ docker build -t springboot-webservice-aws:$VERSION .
+```
+
+```docker
+# checking current docker images
+docker images -a
+```
+
+```docker
+$ docker run -d -p 8080:8080 <image id>
+59d7adb22a846e6e7f3b2ba928a0103e521b89c3080a1781be953a3ed597d2e6
+```
+
+## Summary
+
+- [Personal Summary Contents](https://chipped-moat-7da.notion.site/AWS-dd2df40406fd45b4bcf5f09dd693dbe6)
+
+## Ref
+
+- [이동욱님 깃헙](https://github.com/jojoldu/freelec-springboot2-webservice)
 - [yes24 - book](http://www.yes24.com/Product/Goods/83849117)

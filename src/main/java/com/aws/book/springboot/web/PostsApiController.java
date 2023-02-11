@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -17,19 +19,19 @@ public class PostsApiController {
 
     /**
      * 게시글 등록 API
-     * @param requestDto : title, content, author 값을 request로 받아 저장
-     * @return Long : insert/update 된 id 값을 반환
+     * @param requestDto 제목, 내용, 작성자를 파라미터로 받는다
+     * @return insert/update 된 id 값을 반환
      */
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto) {
+    public Long save(@Valid @RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
 
     /**
      * 게시글 수정 API
-     * @param id : 게시글 번호
+     * @param id 게시글 번호
      * @param requestDto : 게시글 수정에 필요한 파라미터
-     * @return Long : 게시글 수정 성공 여부 반환
+     * @return 게시글 수정 성공 여부 반환
      */
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable("id") Long id, @RequestBody PostsUpdateRequestDto requestDto) {
@@ -38,12 +40,21 @@ public class PostsApiController {
 
     /**
      * 게시글 조회 API
-     * @param id : 게시글 번호
-     * @return PostsResponseDto
+     * @param id 게시글 번호
+     * @return 단일 게시글 반환
      */
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable("id") Long id) {
         return postsService.findById(id);
+    }
+
+    /**
+     * 게시글 삭제 API
+     * @param id 게시글 번호
+     */
+    @DeleteMapping("/api/v1/posts/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        postsService.delete(id);
     }
 
 }
