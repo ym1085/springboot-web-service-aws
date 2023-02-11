@@ -3,40 +3,40 @@
 해당 프로젝트는 개인적인 공부를 목적으로 하였기에 불필요한 주석이 소스내에  
 다수 존재할 수 있습니다.
 
-## Tech Spec
+## 기술 스택
 
 - JDK 1.8
 - Spring boot 2.1.9.RELEASE 
 - H2
 
-## Goal
+## 학습 목표
 
-1. Learning Spring boot JPA, Security, OAuth
-2. Learning writing Test Code with JUnit
-3. Learning AWS Cloud Infra and CI/CD
+1. Learning Spring `Data JPA`, `Security`, `OAuth`
+2. Learning writing `Test Code` with JUnit
+3. Learning AWS Cloud Infra and `CI/CD`
 
-## How to use?
+## 프로젝트 빌드
 
-```docker
+```shell
 # build Dockerfile
  docker build -t springboot-webservice-aws:$VERSION .
 ```
 
-```docker
+```shell
 # checking current docker images
 docker images -a
 ```
 
-```docker
+```shell
 $ docker run -d -p 8080:8080 <image id>
 59d7adb22a846e6e7f3b2ba928a0103e521b89c3080a1781be953a3ed597d2e6
 ```
 
-## Summary
+## 정리 내용
 
-- [Personal Summary Contents](https://chipped-moat-7da.notion.site/AWS-dd2df40406fd45b4bcf5f09dd693dbe6)
+- [Notion](https://chipped-moat-7da.notion.site/AWS-dd2df40406fd45b4bcf5f09dd693dbe6)
 
-## Ref
+## 참고 자료
 
 - [이동욱님 깃헙](https://github.com/jojoldu/freelec-springboot2-webservice)
 - [yes24 - book](http://www.yes24.com/Product/Goods/83849117)
