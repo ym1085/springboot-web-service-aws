@@ -1,12 +1,19 @@
 package com.aws.book.springboot.web;
 
-import org.assertj.core.api.Assertions;
+import com.aws.book.springboot.service.PostsService;
+import com.aws.book.springboot.web.dto.PostsListResponseDto;
+import com.aws.book.springboot.web.dto.PostsSaveRequestDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @RunWith
@@ -21,12 +28,19 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  */
 
+// https://chb2005.tistory.com/63
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IndexControllerTest {
 
     @Autowired
+    private PostsService postsService;
+
+    @Autowired
     private TestRestTemplate restTemplate;
+
+    @LocalServerPort
+    private int port;
 
     @Test
     public void 메인페이지_로딩() throws Exception {
@@ -35,7 +49,34 @@ public class IndexControllerTest {
         String body = restTemplate.getForObject("/", String.class);
 
         //then
-        Assertions.assertThat(body).contains("스프링 부트");
+        assertThat(body).contains("스프링 부트");
+    }
+
+    @Test
+    public void 게시글_전체_조회_테스트() throws Exception {
+        //given
+        //when
+        saveBoardContents();
+
+        List<PostsListResponseDto> response = postsService.findAllDesc();
+
+        //then
+        assertThat(response.size()).isGreaterThan(0);
+        assertThat(response.size()).isEqualTo(2);
+    }
+
+    private void saveBoardContents() {
+        postsService.save(PostsSaveRequestDto.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        postsService.save(PostsSaveRequestDto.builder()
+                .title("title2")
+                .content("content2")
+                .author("author2")
+                .build());
     }
 
 }
