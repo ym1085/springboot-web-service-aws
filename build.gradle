@@ -48,6 +48,11 @@ dependencies {
     // mustache template engine
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
+    // spring security oauth2 client
+    // 소셜 로그인 등 클라이언트 입장에서 소셜 기능 구현 시 필요한 의존성
+    // spring-security-oauth2-client와 spring-security-oauth2-jose 기본 관리
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
