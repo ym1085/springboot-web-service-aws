@@ -53,6 +53,10 @@ dependencies {
     // spring-security-oauth2-client와 spring-security-oauth2-jose 기본 관리
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+    // spring-session-jdbc
+    // Redis, JDBC(DataBase) 등을 통해 세션 정보를 저장, 관리할 수 있는 서비스를 제공
+    implementation 'org.springframework.session:spring-session-jdbc'
+
 //    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
 //    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
