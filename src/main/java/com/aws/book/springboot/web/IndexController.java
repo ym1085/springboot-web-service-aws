@@ -1,5 +1,6 @@
 package com.aws.book.springboot.web;
 
+import com.aws.book.springboot.config.auth.LoginUser;
 import com.aws.book.springboot.config.auth.dto.SessionUser;
 import com.aws.book.springboot.service.PostsService;
 import com.aws.book.springboot.web.dto.PostsResponseDto;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession; // 메인 화면에서 session 값 사용을 위해 추가
+    private final HttpSession httpSession; // 메인 화면에서 session 값 사용을 위해 추가, @LoginUser 어노테이션으로 변경
 
     /**
      * 메인 화면 출력 API
@@ -26,11 +28,13 @@ public class IndexController {
      * @return
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user, HttpServletRequest request) {
         model.addAttribute("posts", postsService.findAllDesc());
+        request.getSession();
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user"); // CustomOAuth2UserService 클래스에서 session 값 셋팅
+        //SessionUser user = (SessionUser) httpSession.getAttribute("user"); // CustomOAuth2UserService 클래스에서 session 값 셋팅
         if (user != null) {
+            log.info("index, user = {}", user.toString());
             model.addAttribute("userName", user.getName());
         } else {
             log.warn("Cannot find userName in HttpSession...");
